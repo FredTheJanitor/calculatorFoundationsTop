@@ -11,6 +11,7 @@ body {
     margin-top: 13vh;
     height: 75vh;
     width: 45vh;
+    border-radius: 2%;
     background-color: rgb(31, 53, 116);
     box-shadow: 3vw 3vw 2vw -4vw rgb(0, 255, 234) inset,
                 -2vw -2vw 1vw -2vw rgba(0, 6, 92, 0.644) inset,
@@ -126,27 +127,39 @@ button {
     font-weight: bolder;
 }
 button:hover {
+    transition-property: width, margin-right, margin-left, transform, box-shadow; /* Specify properties to transition */
+    transition-duration: 0.15s; /* Set the duration for all transitioned properties */
+    transition-timing-function: ease-in-out; /* Optional: Define how the transition progresses */
     width: 6.7vh;
     margin-right: .15vh;
     margin-left: .15vh;
     transform: translateY(.2vh); /* Slight downward shift */
     box-shadow: 0vw 0vw 2vw 1vw rgba(0, 0, 0, 0.151) inset,
-                2vw 2vw 1vw 2vw rgba(71, 54, 35, 0.158) inset,
+                0vw 0vw 2vw 1vw rgba(0, 0, 0, 0.055) inset,
                 .25vw .25vw .5vw -.25vw rgba(54, 46, 31, 0.089) inset,
                 .25vw .25vw .25vw -.1vw rgba(68, 61, 21, 0.486) inset,  
-                -.25vw -.25vw .25vw .1vw rgba(66, 25, 180, 0.719) inset,
-                .5vw .5vw .75vh rgba(0, 0, 0, 0.637);
+                -.25vw -.25vw .25vw .1vw rgba(41, 25, 180, 0.719) inset,
+                .5vw .5vw .75vh rgba(0, 0, 0, 0.479);
 
 }
 button:active {
-    width: 6.3vh;
-    margin-right: .35vh;
-    margin-left: .35vh;
+    transition-property: width, margin-right, margin-left, transform, box-shadow, border-style; /* Specify properties to transition */
+    transition-duration: 0.08s; /* Set the duration for all transitioned properties */
+    transition-timing-function: ease-in-out; /* Optional: Define how the transition progresses */
+    border-top: rgb(59, 67, 173);
+    border-left: rgb(59, 67, 173);
+    border-right: rgb(44, 70, 126);
+    border-bottom: rgb(44, 70, 126);
+    border-width: .4vh;
+    border-style: inset;
+    width: 6.5vh;
+    margin-right: .25vh;
+    margin-left: .25vh;
     transform: translateY(.3vh); /* Slight downward shift */
     box-shadow: 0vw 0vw 2vw 1vw rgba(0, 0, 0, 0.151) inset,
                 2vw 2vw 1vw 2vw rgba(71, 54, 35, 0.158) inset,
-                .25vw .25vw .5vw -.25vw rgba(54, 46, 31, 0.089) inset,
+                .25vw .25vw 1vw -.25vw rgba(0, 0, 0, 0.658) inset,
                 .25vw .25vw .25vw -.1vw rgba(68, 61, 21, 0.486) inset,
-                -.25vw -.25vw .25vw .1vw rgba(66, 51, 107, 0.514) inset,  
-                .5vw .5vw .5vh rgba(0, 0, 0, 0.411); /* Reduced shadow */
+                -.25vw -.25vw 1vw -.1vw rgba(255, 255, 245, 0.288) inset,  
+                0vw 0vw .5vh rgba(0, 0, 0, 0.781) inset;
 }
