@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Digital-7 V7";
+    src: url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.eot");
+    src: url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/58045dabdc3a361cb9bb9faf2f1dd1f3.svg#Digital-7 V7")format("svg");
+}
+
 body {
     background-color: rgb(209, 184, 73);
     display: flex;
@@ -26,12 +36,19 @@ body {
     justify-content: center;
     width: 100%;
     height: 15%;
+    
 }
 #displayBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
     width: 75%;
     height: 85%;
     margin-bottom: 2vh;
     background-color: rgb(135, 158, 134);
+    padding: .25rem;
+    color: rgb(32, 49, 6);
+    font-family: "Digital-7 V7";
     box-shadow: 
                 0vw 0vw 1vw -.2vw rgba(106, 252, 232, 0.384) inset,
                 -.25vw -.25vw .75vh -.2vw rgb(0, 14, 59),
@@ -42,6 +59,32 @@ body {
                 0vw 0vw 1vh 0vw rgba(255, 255, 255, 0.938);
 
 }
+#previousDisplay {
+    padding: none;
+    font-size: 2.5vh;
+    opacity: .6
+}
+#mainDisplay {
+    padding: none;
+    animation: blink 2s infinite; 
+    font-size: 8vh;
+    text-align: right;
+}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    55% {
+        opacity: 0.6;
+    }
+    95% {
+        opacity: 0.6;
+    }
+}
+
 #allButtonsBox {
     display: flex;
     justify-content: space-between;
@@ -123,7 +166,7 @@ button {
                 -.25vw -.25vw .25vw .1vw rgba(29, 11, 78, 0.705) inset,
                 -.25vw -.25vw 1vw .01vw rgb(0, 0, 0) inset,  
                 .5vw .5vw 1vh black;
-    font-size: .75rem;
+    font-size: 1.5vh;
     font-weight: bolder;
 }
 button:hover {
@@ -163,3 +206,4 @@ button:active {
                 -.25vw -.25vw 1vw -.1vw rgba(255, 255, 245, 0.288) inset,  
                 0vw 0vw .5vh rgba(0, 0, 0, 0.781) inset;
 }
+
