@@ -41,12 +41,12 @@ body {
 #displayBox {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: end;
     width: 75%;
     height: 85%;
     margin-bottom: 2vh;
     background-color: rgb(135, 158, 134);
-    padding: .25rem;
+    padding: .25vh;
     color: rgb(32, 49, 6);
     font-family: "Digital-7 V7";
     box-shadow: 
@@ -60,14 +60,13 @@ body {
 
 }
 #previousDisplay {
-    padding: none;
     font-size: 2.5vh;
     opacity: .6
 }
 #mainDisplay {
     padding: none;
     animation: blink 2s infinite; 
-    font-size: 8vh;
+    font-size: 7.5vh;
     text-align: right;
 }
 @keyframes blink {
