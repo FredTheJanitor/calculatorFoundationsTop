@@ -16,6 +16,10 @@ const calculator = {
 
 // -------------------------------------- Document Objects ------------------------------------
 
+// ---------- Display
+const previousDisplay = document.getElementById("previousDisplay");
+const mainDisplay = document.getElementById("mainDisplay");
+
 // ---------- Extra Buttons
 const doomButton = document.getElementById("tikTokButton");
 const boomButton = document.getElementById("facebookButton");
@@ -50,123 +54,132 @@ const subtractButton = document.getElementById("subtractButton");
 const addButton = document.getElementById("addButton");
 const equalButton = document.getElementById("equalButton");
 
-// --------- Button Objects
+// --------- Button Array of Objects
 
-const extraButtons = {
-    doomButton: {
+const extraButtons = [
+    {
         button: doomButton,
         buttonValue: "Tik Tok",
         buttonLink: "https://www.tiktok.com/",
     },
-    boomButton: {
+    {
         button: boomButton,
         buttonValue: "Facebook",
         buttonLink: "https://www.facebook.com/",
     },
-    jamButton: {
+     {
         button: jamButton,
         buttonValue: "Spotify",
         buttonLink: "https://open.spotify.com/",
     },
-    darkButton: {
+    {
         button: darkButton,
         buttonValue: "Dark Mode",
         buttonLink: "",
     },
-    lightButton: {
+    {
         button: lightButton,
         buttonValue: "Light Mode",
         buttonLink: "",
     },
-    screenButton: {
+    {
         button: screenButton,
         buttonValue: "Change Screen",
         buttonLink: "",
     },
-}
+];
 
-const numberButtons = {
-    oneButton: {
+const numberButtons = [
+    {
         button: oneButton,
         buttonValue: 1,
     },
-    twoButton: {
+    {
         button: twoButton,
         buttonValue: 2,
     },
-    threeButton: {
+    {
         button: threeButton,
         buttonValue: 3,
     },
-    fourButton: {
+    {
         button: fourButton,
         buttonValue: 4,
     },
-    fiveButton: {
+    {
         button: fiveButton,
         buttonValue: 5,
     },
-    sixButton: {
+    {
         button: sixButton,
         buttonValue: 1,
     },
-    sevenButton: {
+    {
         button: sevenButton,
         buttonValue: 1,
     },
-    eightButton: {
+    {
         button: eightButton,
         buttonValue: 1,
     },
-    nineButton: {
+    {
         button: nineButton,
         buttonValue: 1,
     },
-    zeroButton: {
+    {
         button: zeroButton,
         buttonValue: 1,
     },
-}
-const operationButtons = {
-    onClearButton: {
+];
+const operationButtons = [
+    {
         button: onClearButton,
         buttonValue: "",
     },
-    dotButton: {
+    {
         button: dotButton,
         buttonValue: ".",
     },
-    divideButton: {
+    {
         button: divideButton,
         buttonValue: "/",
     },
-    multiplyButton: {
+    {
         button: multiplyButton,
         buttonValue: "*",
     },
-    subtractButton: {
+    {
         button: subtractButton,
         buttonValue: "-",
     },
-    addButton: {
+    {
         button: addButton,
         buttonValue: "+",
     },
-    equalButton: {
+    {
         button: equalButton,
         buttonValue: "",
     },
-}
+];
 
 // ------------------------------------- Core Functions ---------------------------------------
-function getInput() {
+function getInputNumber() {
+    input = this.textContent;
+    storeInput(input);
+    displayInput(input);
+}
+
+function getInputSign() {
+}
+
+function storeInput(input) {
+    inputInStorage.push(input);
+    previousDisplay.textContent = inputInStorage.join("");
 
 }
-function storeInput() {
-    inputInStorage.push(input);
-}
-function displayInput() {
+function displayInput(input) {
     inputInDisplay.push(input);
+    mainDisplay.textContent = inputInDisplay.join("");
     // display input
 }
 function evaluate() {
@@ -174,5 +187,21 @@ function evaluate() {
     // trigger display to reflect previous calculation and solution at same time
 }
 function resetCalc() {
+    while (inputInStorage.length > 0){
+        inputInStorage.pop();
+    }
+    while (inputInDisplay.length > 0){
+        inputInDisplay.pop();
+    }
+    previousDisplay.textContent = ""
+    mainDisplay.textContent = 0
     // 
 }
+// ---------------------------------------- The Calc ------------------------------------------
+
+// didnt make these arrays for nothing LMAO
+for (let i = 0; i <10; i++) {
+    numberButtons[i].button.addEventListener("click", getInputNumber);
+}
+
+onClearButton.addEventListener("click", resetCalc);
