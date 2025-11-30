@@ -133,14 +133,6 @@ const numberButtons = [
 ];
 const operationButtons = [
     {
-        button: onClearButton,
-        buttonValue: "",
-    },
-    {
-        button: dotButton,
-        buttonValue: ".",
-    },
-    {
         button: divideButton,
         buttonValue: "/",
     },
@@ -156,10 +148,6 @@ const operationButtons = [
         button: addButton,
         buttonValue: "+",
     },
-    {
-        button: equalButton,
-        buttonValue: "",
-    },
 ];
 
 // ------------------------------------- Core Functions ---------------------------------------
@@ -170,17 +158,26 @@ function getInputNumber() {
 }
 
 function getInputSign() {
+    console.log(this);
 }
+
 
 function storeInput(input) {
-    inputInStorage.push(input);
-    previousDisplay.textContent = inputInStorage.join("");
-
+    if (inputInStorage.length < 10) {
+        inputInStorage.push(input);
+        previousDisplay.textContent = inputInStorage.join("");
+    } else {
+        previousDisplay.textContent = "this isnt a GOOD calculator,"
+    }
 }
 function displayInput(input) {
-    inputInDisplay.push(input);
-    mainDisplay.textContent = inputInDisplay.join("");
-    // display input
+    if (inputInDisplay.length < 10) {
+        inputInDisplay.push(input);
+        mainDisplay.textContent = inputInDisplay.join("");
+    } else {
+        mainDisplay.textContent = "bro chill"
+    }
+        // display input
 }
 function evaluate() {
     // run calculation within store input
@@ -203,5 +200,8 @@ function resetCalc() {
 for (let i = 0; i <10; i++) {
     numberButtons[i].button.addEventListener("click", getInputNumber);
 }
-
+for (let i = 0; i <4; i++) {
+    operationButtons[i].button.addEventListener("click", getInputSign);
+}
 onClearButton.addEventListener("click", resetCalc);
+dotButton.addEventListener("click", getInputNumber);
