@@ -46,7 +46,8 @@ body {
     height: 85%;
     margin-bottom: 2vh;
     background-color: rgb(135, 158, 134);
-    padding: .25vh;
+    padding-left: .25vh;
+    padding-right: .25vh;
     color: rgb(32, 49, 6);
     font-family: "Digital-7 V7";
     box-shadow: 
