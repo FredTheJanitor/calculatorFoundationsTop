@@ -4,8 +4,13 @@
 
 // ------------------------------------- Core Variables ---------------------------------------
 let input;
-let solution;
-let previousCalculation;
+// let solution;
+// let previousCalculation;
+let num1;
+let num2;
+const num2Array = [];
+let sign;
+let result;
 const inputInStorage = [];
 const inputInDisplay = [];
 const calculator = {
@@ -155,33 +160,48 @@ function getInputNumber() {
     input = this.textContent;
     storeInput(input);
     displayInput(input);
+    if (num1 !== undefined) {
+        num2Array.push(input);
+    }
 }
 
 function getInputSign() {
-    // if last entry is an input sign already in the array, do nothing.
+    
     if ((inputInStorage.at(-1) === "/") ||
         (inputInStorage.at(-1) === "*") ||
         (inputInStorage.at(-1) === "-") ||
         (inputInStorage.at(-1) === "+")) {
-    } else {
+        // if last entry is an input sign already in the array, do nothing.
+    } else if (!inputInStorage.at(0)) {
+        // if array is empty, do nothing.
+    } else if (sign === undefined) {
         // input proper sign into array based on button
         switch (this.id) {
         case "divideButton":
+            sign = "/";
+            num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[0].buttonValue;
             storeInput(input);
             displayInput(input);
+            
             break;
         case "multiplyButton":
+            sign = "*";
+            num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[1].buttonValue;
             storeInput(input);
             displayInput(input);
             break;
         case "subtractButton":
+            sign = "-";
+            num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[2].buttonValue;
             storeInput(input);
             displayInput(input);
             break;
         case "addButton":
+            sign = "+";
+            num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[3].buttonValue;
             storeInput(input);
             displayInput(input);
@@ -227,8 +247,19 @@ function resetCalc() {
     while (inputInDisplay.length > 0){
         inputInDisplay.pop();
     }
+    while (num2Array.length > 0){
+        num2Array.pop();
+    }
     previousDisplay.textContent = ""
     mainDisplay.textContent = 0
+    input = undefined;
+    solution = undefined;
+    previousCalculation = undefined;
+    num1 = undefined;
+    num2 = undefined;
+    sign = undefined;
+    result = undefined;
+
     // 
 }
 // ---------------------------------------- The Calc ------------------------------------------
