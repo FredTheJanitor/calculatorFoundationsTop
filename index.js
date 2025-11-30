@@ -1,7 +1,3 @@
-// instead of cramming input into weird small functions...
-// lets lean into javascript's internal calculation system which works fine.
-// (also lets try to do this without an open invitation for XSS)
-
 // ------------------------------------- Core Variables ---------------------------------------
 let input;
 // let solution;
@@ -157,23 +153,71 @@ const operationButtons = [
 
 // ------------------------------------- Core Functions ---------------------------------------
 function getInputNumber() {
-    input = this.textContent;
-    storeInput(input);
-    displayInput(input);
-    if (num1 !== undefined) {
-        num2Array.push(input);
+    if (sign === "=") {
+        
+        while (inputInDisplay > 0) {
+            inputInDisplay.pop();
+        };
+        while (inputInStorage > 0) {
+            inputInStorage.pop();
+        };
+        while (num2Array > 0) {
+            num2Array.pop();
+        };
+        sign = undefined;
+        result = undefined;
+        num1 = undefined;
+        num2 = undefined
+    }
+    if ((this.textContent === ".") && (mainDisplay.textContent.includes("."))) {
+        // do nothing
+        return;
+    } 
+    if ((this.textContent === ".") && (!inputInStorage.at(0))) {
+        // if array is empty, do nothing.
+        return;
+    }
+    else {
+        input = this.textContent;
+        storeInput(input);
+        displayInput(input);
+        if (num1 !== undefined) {
+            num2Array.push(input);
+        }
     }
 }
 
 function getInputSign() {
     
-    if ((inputInStorage.at(-1) === "/") ||
+    if ((!inputInStorage.at(0))  || (inputInStorage.at(-1) === ".")){
+        // if array is empty, do nothing.
+        return;
+    } else if ((inputInStorage.at(-1) === "/") ||
         (inputInStorage.at(-1) === "*") ||
         (inputInStorage.at(-1) === "-") ||
         (inputInStorage.at(-1) === "+")) {
-        // if last entry is an input sign already in the array, do nothing.
-    } else if (!inputInStorage.at(0)) {
-        // if array is empty, do nothing.
+        switch (this.id) {
+            case "divideButton":
+                sign = "/";
+                input = operationButtons[0].buttonValue;
+                break;
+            case "multiplyButton":
+                sign = "*";
+                input = operationButtons[1].buttonValue;
+                break;
+            case "subtractButton":
+                sign = "-";
+                input = operationButtons[2].buttonValue;
+                break;
+            case "addButton":
+                sign = "+";
+                input = operationButtons[3].buttonValue;
+                break;
+        }
+        inputInStorage.pop();
+        inputInStorage.push(input);
+        previousDisplay.textContent = inputInStorage.join("");
+        return;
     } else if (sign === undefined) {
         // THIS IS WHAT HAPPENS FOR THE FIRST SIGN
         switch (this.id) {
@@ -200,6 +244,7 @@ function getInputSign() {
         }
         storeInput(input);
         displayInput(input);
+        return;
     } else {
         // FOR THE SECOND SIGN WE WILL NEED TO PERFORM THE CALCULATION for previous Sign
         num2 = parseFloat(num2Array.join(""));
@@ -228,6 +273,7 @@ function getInputSign() {
             num2Array.pop();
         }
         num2 = null;
+        return;
 
     }
 
@@ -235,7 +281,9 @@ function getInputSign() {
 
 
 function storeInput(input) {
-    if (inputInStorage.length < 30) {
+    if (sign === "="){
+
+    } else if (inputInStorage.length < 30) {
         inputInStorage.push(input);
         previousDisplay.textContent = inputInStorage.join("");
     } else {
@@ -263,7 +311,8 @@ function evaluate() {
     if ((inputInStorage.at(-1) === "/") ||
         (inputInStorage.at(-1) === "*") ||
         (inputInStorage.at(-1) === "-") ||
-        (inputInStorage.at(-1) === "+")) {
+        (inputInStorage.at(-1) === "+") ||
+        (inputInStorage.at(-1) === ".")) {
         // if last entry is an input sign already in the array, do nothing.
     } else if (!inputInStorage.at(0)) {
         // if array is empty, do nothing.
@@ -284,7 +333,7 @@ function evaluate() {
         inputInStorage.push(result);
         inputInDisplay.push(result);
         mainDisplay.textContent = inputInDisplay.join("");
-        sign === undefined;
+        sign = "=";
     }
     // run calculation within store input
     // trigger display to reflect previous calculation and solution at same time
@@ -314,6 +363,8 @@ function resetCalc() {
 
 // ----------- Helper Functions
 function calculateResultBasedOnSign(sign) {
+    num2 = parseFloat(num2);
+    num1 = parseFloat(num1);
     if (sign === "/") {
         result = num1/num2;
     } else if (sign === "*"){
@@ -321,9 +372,83 @@ function calculateResultBasedOnSign(sign) {
     } else if (sign === "-") {
         result = num1-num2;
     } else if (sign === "+") {
+        
         result = num1+num2;
-    } else {
-        alert('error: sign expected')
+        console.log(result);
+    } else if (sign === "=") {
+        // do nothing, and keep the previous result.
+    }
+    if (result.toString().length > 10) {
+        if (result > 0) {
+            switch (true) {
+                case (Math.abs(result) < 10):
+                    result = result.toFixed(8);
+                    break;
+                case (Math.abs(result) < 100):
+                    result = result.toFixed(7);
+                    break;
+                case (Math.abs(result) < 1000):
+                    result = result.toFixed(6);
+                    break;
+                case (Math.abs(result) < 10000):
+                    result = result.toFixed(5);
+                    break;
+                case (Math.abs(result) < 100000):
+                    result = result.toFixed(4);
+                    break;
+                case (Math.abs(result) < 1000000):
+                    result = result.toFixed(3);
+                    break;
+                case (Math.abs(result) < 10000000):
+                    result = result.toFixed(2);
+                    break;
+                case (Math.abs(result) < 100000000):
+                    result = result.toFixed(1);
+                    break;
+                case (Math.abs(result) < 10000000000):
+                    result = result.toFixed(0);
+                    break;
+                case (Math.abs(result) >= 10000000000):
+                    alert('big numbers like that are scary');
+                    resetCalc();
+                    break;
+            }
+        } else if (result < 0) {
+            switch (true) {
+                case (Math.abs(result) < 10):
+                    result = result.toFixed(7);
+                    break;
+                case (Math.abs(result) < 100):
+                    result = result.toFixed(6);
+                    break;
+                case (Math.abs(result) < 1000):
+                    result = result.toFixed(5);
+                    break;
+                case (Math.abs(result) < 10000):
+                    result = result.toFixed(4);
+                    break;
+                case (Math.abs(result) < 100000):
+                    result = result.toFixed(3);
+                    break;
+                case (Math.abs(result) < 1000000):
+                    result = result.toFixed(2);
+                    break;
+                case (Math.abs(result) < 10000000):
+                    result = result.toFixed(1);
+                    break;
+                case (Math.abs(result) < 1000000000):
+                    result = result.toFixed(0);
+                    break;
+                case (Math.abs(result) >= 1000000000):
+                    alert('big numbers like that are scary');
+                    resetCalc();
+                    break;
+            }
+        }
+
+    }
+    if (result.toString().length > 10) {
+
     }
 }
 
