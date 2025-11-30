@@ -175,39 +175,62 @@ function getInputSign() {
     } else if (!inputInStorage.at(0)) {
         // if array is empty, do nothing.
     } else if (sign === undefined) {
-        // input proper sign into array based on button
+        // THIS IS WHAT HAPPENS FOR THE FIRST SIGN
         switch (this.id) {
         case "divideButton":
             sign = "/";
             num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[0].buttonValue;
-            storeInput(input);
-            displayInput(input);
-            
             break;
         case "multiplyButton":
             sign = "*";
             num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[1].buttonValue;
-            storeInput(input);
-            displayInput(input);
             break;
         case "subtractButton":
             sign = "-";
             num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[2].buttonValue;
-            storeInput(input);
-            displayInput(input);
             break;
         case "addButton":
             sign = "+";
             num1 = parseFloat(inputInStorage.join(""));
             input = operationButtons[3].buttonValue;
-            storeInput(input);
-            displayInput(input);
             break;
         }
+        storeInput(input);
+        displayInput(input);
+    } else {
+        // FOR THE SECOND SIGN WE WILL NEED TO PERFORM THE CALCULATION for previous Sign
+        num2 = parseFloat(num2Array.join(""));
+        calculateResultBasedOnSign(sign)
+        switch (this.id) {
+            case "divideButton":
+                sign = "/";
+                break;
+            case "multiplyButton":
+                sign = "*";
+                break;
+            case "subtractButton":
+                sign = "-";
+                break;
+            case "addButton":
+                sign = "+";
+                break;       
+        }
+        inputInStorage.push("=");
+        inputInStorage.push(result);
+        input = sign;
+        storeInput(input);
+        displayInput(input);
+        num1 = result;
+        while (num2Array.length > 0) {
+            num2Array.pop();
+        }
+        num2 = null;
+
     }
+
 }
 
 
@@ -237,6 +260,32 @@ function displayInput(input) {
     }
 }
 function evaluate() {
+    if ((inputInStorage.at(-1) === "/") ||
+        (inputInStorage.at(-1) === "*") ||
+        (inputInStorage.at(-1) === "-") ||
+        (inputInStorage.at(-1) === "+")) {
+        // if last entry is an input sign already in the array, do nothing.
+    } else if (!inputInStorage.at(0)) {
+        // if array is empty, do nothing.
+    } else if (sign === undefined) {
+        // if no operator has been entered yet, do nothing.
+    } else {
+        num2 = parseFloat(num2Array.join(""));
+        calculateResultBasedOnSign(sign);
+        inputInStorage.push("=");
+        inputInStorage.push(result);
+        previousDisplay.textContent = inputInStorage.join("");
+        while (inputInStorage.length > 0){
+            inputInStorage.pop();
+        }
+        while (inputInDisplay.length > 0){
+            inputInDisplay.pop();
+        }
+        inputInStorage.push(result);
+        inputInDisplay.push(result);
+        mainDisplay.textContent = inputInDisplay.join("");
+        sign === undefined;
+    }
     // run calculation within store input
     // trigger display to reflect previous calculation and solution at same time
 }
@@ -262,6 +311,22 @@ function resetCalc() {
 
     // 
 }
+
+// ----------- Helper Functions
+function calculateResultBasedOnSign(sign) {
+    if (sign === "/") {
+        result = num1/num2;
+    } else if (sign === "*"){
+        result = num1*num2;
+    } else if (sign === "-") {
+        result = num1-num2;
+    } else if (sign === "+") {
+        result = num1+num2;
+    } else {
+        alert('error: sign expected')
+    }
+}
+
 // ---------------------------------------- The Calc ------------------------------------------
 
 // didnt make these arrays for nothing LMAO
