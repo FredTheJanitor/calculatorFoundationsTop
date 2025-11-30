@@ -158,7 +158,30 @@ function getInputNumber() {
 }
 
 function getInputSign() {
-    console.log(this);
+    switch (this.id) {
+        case "divideButton":
+            input = operationButtons[0].buttonValue;
+            storeInput(input);
+            displayInput(input);
+            break;
+        case "multiplyButton":
+            input = operationButtons[1].buttonValue;
+            storeInput(input);
+            displayInput(input);
+            break;
+        case "subtractButton":
+            input = operationButtons[2].buttonValue;
+            storeInput(input);
+            displayInput(input);
+            break;
+        case "addButton":
+            input = operationButtons[3].buttonValue;
+            storeInput(input);
+            displayInput(input);
+            break;
+            
+    }
+    operationButtons
 }
 
 
