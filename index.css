@@ -206,3 +206,6 @@ button:active {
                 0vw 0vw .5vh rgba(0, 0, 0, 0.781) inset;
 }
 
+#secretMessage {
+    font-family: "Digital-7 V7";
+}
