@@ -4,11 +4,11 @@ let input;
 // let previousCalculation;
 let num1;
 let num2;
-const num2Array = [];
 let sign;
 let result;
 const inputInStorage = [];
 const inputInDisplay = [];
+const num2Array = [];
 const calculator = {
     storage: inputInStorage,
     display: inputInDisplay
@@ -374,10 +374,11 @@ function calculateResultBasedOnSign(sign) {
     } else if (sign === "+") {
         
         result = num1+num2;
-        console.log(result);
+        
     } else if (sign === "=") {
         // do nothing, and keep the previous result.
     }
+    // MAKE RESULT FIT IN THE SCREEN (spaghetti style ;) )
     if (result.toString().length > 10) {
         if (result > 0) {
             switch (true) {
