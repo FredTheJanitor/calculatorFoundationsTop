@@ -158,7 +158,14 @@ function getInputNumber() {
 }
 
 function getInputSign() {
-    switch (this.id) {
+    // if last entry is an input sign already in the array, do nothing.
+    if ((inputInStorage.at(-1) === "/") ||
+        (inputInStorage.at(-1) === "*") ||
+        (inputInStorage.at(-1) === "-") ||
+        (inputInStorage.at(-1) === "+")) {
+    } else {
+        // input proper sign into array based on button
+        switch (this.id) {
         case "divideButton":
             input = operationButtons[0].buttonValue;
             storeInput(input);
@@ -179,14 +186,13 @@ function getInputSign() {
             storeInput(input);
             displayInput(input);
             break;
-            
+        }
     }
-    operationButtons
 }
 
 
 function storeInput(input) {
-    if (inputInStorage.length < 10) {
+    if (inputInStorage.length < 30) {
         inputInStorage.push(input);
         previousDisplay.textContent = inputInStorage.join("");
     } else {
@@ -194,13 +200,21 @@ function storeInput(input) {
     }
 }
 function displayInput(input) {
-    if (inputInDisplay.length < 10) {
+    if (
+        (input === "/") ||
+        (input === "*") ||
+        (input === "-") ||
+        (input === "+")) {
+        // clear display array
+        while (inputInDisplay.length > 0){
+            inputInDisplay.pop();
+        }
+    } else if (inputInDisplay.length < 10) {
         inputInDisplay.push(input);
         mainDisplay.textContent = inputInDisplay.join("");
     } else {
         mainDisplay.textContent = "bro chill"
     }
-        // display input
 }
 function evaluate() {
     // run calculation within store input
@@ -228,3 +242,4 @@ for (let i = 0; i <4; i++) {
 }
 onClearButton.addEventListener("click", resetCalc);
 dotButton.addEventListener("click", getInputNumber);
+equalButton.addEventListener("click", evaluate); // evily mwahaha
