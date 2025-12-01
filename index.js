@@ -13,11 +13,13 @@ const calculator = {
     storage: inputInStorage,
     display: inputInDisplay
 };
+let state="light";
 
 
 // -------------------------------------- Document Objects ------------------------------------
 
 // ---------- Display
+const displayScreen = document.getElementById("displayBox");
 const previousDisplay = document.getElementById("previousDisplay");
 const mainDisplay = document.getElementById("mainDisplay");
 
@@ -56,6 +58,8 @@ const addButton = document.getElementById("addButton");
 const equalButton = document.getElementById("equalButton");
 
 // --------- Button Array of Objects
+
+const selectAllButtons = document.querySelectorAll('button')
 
 const extraButtons = [
     {
@@ -306,6 +310,13 @@ function displayInput(input) {
     } else {
         mainDisplay.textContent = "bro chill"
     }
+    if (mainDisplay.textContent == '5318008') {
+    previousDisplay.textContent = 'lol, hit on/c to flip back'
+    document.body.style.transform = 'rotate(180deg)';
+    previousDisplay.style.transform = 'rotate(180deg)'
+    document.body.style.transformOrigin = 'center center';
+    
+}
 }
 function evaluate() {
     if ((inputInStorage.at(-1) === "/") ||
@@ -357,6 +368,10 @@ function resetCalc() {
     num2 = undefined;
     sign = undefined;
     result = undefined;
+    document.body.style.zoom = "100%";
+    document.body.style.transform = 'none';
+    previousDisplay.style.transform = 'none'
+    document.body.style.transformOrigin = '';
 
     // 
 }
@@ -465,3 +480,65 @@ for (let i = 0; i <4; i++) {
 onClearButton.addEventListener("click", resetCalc);
 dotButton.addEventListener("click", getInputNumber);
 equalButton.addEventListener("click", evaluate); // evily mwahaha
+doomButton.addEventListener("click", ()=>{
+    window.open("https://www.tiktok.com/");
+    previousDisplay.textContent="Welcome Back, BrainRot Bucko"
+});
+boomButton.addEventListener("click", ()=>{
+    document.body.style.zoom = "150%";
+    window.open("https://www.facebook.com/");
+    previousDisplay.textContent="Click On/C to reset Zoom"
+});
+jamButton.addEventListener("click", ()=>{
+    window.open("https://open.spotify.com/")
+    previousDisplay.textContent="nice tunes brah"
+});
+darkButton.addEventListener("click", ()=>{
+    document.body.style.backgroundColor="rgba(35, 36, 54, 1)"
+    selectAllButtons.forEach((button)=>{
+        button.style.backgroundColor="rgba(53, 56, 124, 1)"
+        button.style.color="rgba(169, 255, 164, 1)"
+    })
+    displayScreen.style.backgroundColor="rgba(10, 14, 10, 1)"
+    displayScreen.style.boxShadow="0vw 0vw 3vw -.5vw rgba(56, 114, 49, 1) inset"
+    displayScreen.style.color="rgba(169, 255, 164, 1)"
+    previousDisplay.textContent="Dark Mode Activated"
+    state="dark"
+});
+lightButton.addEventListener("click", ()=>{
+    document.body.style.backgroundColor=""
+    selectAllButtons.forEach((button)=>{
+        button.style.backgroundColor=""
+        button.style.color=""
+    })
+    displayScreen.style.backgroundColor=""
+    displayScreen.style.boxShadow=""
+    displayScreen.style.color=""
+    previousDisplay.textContent="pfft lame"
+    state ="light"
+});
+screenButton.addEventListener("click", changeScreen)
+function changeScreen() {
+    if (state === "light") {
+        displayScreen.style.backgroundColor="rgba(10, 14, 10, 1)";
+        displayScreen.style.boxShadow="0vw 0vw 3vw -.5vw rgba(56, 114, 49, 1) inset";
+        displayScreen.style.color="rgba(169, 255, 164, 1)";
+        state = "lightWithBlackScreen";
+    } else if (state === "dark") {
+        displayScreen.style.backgroundColor="";
+        displayScreen.style.boxShadow="";
+        displayScreen.style.color="";
+        state = "darkWithLightScreen";
+    } else if (state === "lightWithBlackScreen") {
+        state = "light";
+        displayScreen.style.backgroundColor="";
+        displayScreen.style.boxShadow="";
+        displayScreen.style.color="";
+        
+    } else if (state === "darkWithLightScreen") {
+        displayScreen.style.backgroundColor="rgba(10, 14, 10, 1)";
+        displayScreen.style.boxShadow="0vw 0vw 3vw -.5vw rgba(56, 114, 49, 1) inset";
+        displayScreen.style.color="rgba(169, 255, 164, 1)";
+        state="dark"
+    }
+}
